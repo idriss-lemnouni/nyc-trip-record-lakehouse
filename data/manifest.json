@@ -1,0 +1,17 @@
+{
+  "source": "https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page",
+  "snapshots": [
+    {
+      "month": "2024-12",
+      "name": "yellow_tripdata_2024-12.parquet",
+      "bytes": 61524085,
+      "sha256": "41ebf7db80bebde60c58e5143c14cdf38ad04a0f3e3ff44215b3e240d55f6c78"
+    },
+    {
+      "month": "2025-01",
+      "name": "yellow_tripdata_2025-01.parquet",
+      "bytes": 59158238,
+      "sha256": "9af277e4c0d3f9deb30644da822981e1e7df6af58313170fd3aa8a474485488a"
+    }
+  ]
+}

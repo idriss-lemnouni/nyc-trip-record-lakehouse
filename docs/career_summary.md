@@ -1,0 +1,5 @@
+# Interview summary
+
+**English.** I built a checksummed Spark SQL backfill around 7.14 million NYC Yellow Taxi rows. The December and January snapshots straddle the addition of the congestion-fee column. I reconciled each input row to either the analytical table or quarantine, then compared zone-level counts and decimal fare sums against two Parquet layouts. For one date the partitioned layout selected one 1.85 MB file, while the flat layout had four candidate files totaling 112.44 MB. The larger number of files at rest is the trade-off to explain.
+
+**Français.** J’ai construit un rattrapage Spark SQL avec contrôle d’empreintes sur 7,14 millions de lignes Yellow Taxi. Les deux mois encadrent l’ajout du champ de frais de congestion. Chaque ligne entre dans la table analytique ou la quarantaine. J’ai comparé les comptes par zone et les sommes décimales sur deux dispositions Parquet. Pour le jour testé, le partitionnement a sélectionné un fichier de 1,85 Mo. La disposition à plat comptait quatre fichiers candidats totalisant 112,44 Mo. Le coût de ce choix est la hausse du nombre total de fichiers.

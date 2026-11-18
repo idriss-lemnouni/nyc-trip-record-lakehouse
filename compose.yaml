@@ -1,0 +1,72 @@
+name: nyc-trip-record-lakehouse
+
+services:
+  spark:
+    image: apache/spark:3.5.6
+    entrypoint: ["/opt/spark/bin/spark-submit"]
+    working_dir: /workspace
+    environment:
+      SPARK_LOCAL_IP: 127.0.0.1
+    volumes:
+      - .:/workspace:ro
+      - ./runs:/workspace/runs
+    mem_limit: 2304m
+  namenode:
+    image: apache/hadoop:3.4.2
+    profiles: [hdfs]
+    user: "0:0"
+    entrypoint: ["/bin/bash", "-ec"]
+    command:
+      - |
+        if [ ! -f /data/name/current/VERSION ]; then
+          /opt/hadoop/bin/hdfs namenode -format -nonInteractive
+        fi
+        exec /opt/hadoop/bin/hdfs namenode
+    environment:
+      HADOOP_CONF_DIR: /hdfs-config
+      HADOOP_HEAPSIZE_MAX: "384"
+    volumes:
+      - ./hdfs:/hdfs-config:ro
+      - namenode-data:/data/name
+    mem_limit: 768m
+  datanode:
+    image: apache/hadoop:3.4.2
+    profiles: [hdfs]
+    user: "0:0"
+    entrypoint: ["/opt/hadoop/bin/hdfs", "datanode"]
+    depends_on: [namenode]
+    environment:
+      HADOOP_CONF_DIR: /hdfs-config
+      HADOOP_HEAPSIZE_MAX: "384"
+    volumes:
+      - ./hdfs:/hdfs-config:ro
+      - datanode-data:/data/blocks
+    mem_limit: 768m
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >-
+          /opt/hadoop/bin/hdfs dfsadmin -safemode get | grep -Fq 'Safe mode is OFF' &&
+          /opt/hadoop/bin/hdfs dfsadmin -report -live | grep -Fq 'Live datanodes (1)'
+      interval: 8s
+      timeout: 8s
+      retries: 12
+  airflow:
+    profiles: [airflow]
+    build:
+      context: .
+      dockerfile: Dockerfile.airflow
+    working_dir: /workspace
+    environment:
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_FOLDER: /workspace/dags
+      SPARK_LOCAL_IP: 127.0.0.1
+    volumes:
+      - .:/workspace:ro
+      - ./runs:/workspace/runs
+      - ./data/raw:/workspace/data/raw
+    mem_limit: 2600m
+
+volumes:
+  namenode-data:
+  datanode-data:

@@ -1,0 +1,13 @@
+{
+  "identity": {
+    "source_manifest_sha256": "7c3f3ea4f66ecddfe00fcd2c5013e12fc820a58765b5f64a9107ff1532987bb9",
+    "benchmark_day": "2025-01-15"
+  },
+  "hdfs_snapshot": "hdfs://namenode:8020/nyc-tlc/a4c4633eb9e9ff15d3da19fd6031b802a2d6b827b4f2e2495a49e2676d0d0b26",
+  "created": true,
+  "eligible_rows": 7003656,
+  "quarantined_rows": 139941,
+  "daily_mart_rows": 123325,
+  "daily_mart_zones": 232,
+  "daily_mart_equal_to_local_for_both_layouts": true
+}

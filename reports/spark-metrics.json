@@ -1,0 +1,68 @@
+{
+  "identity": {
+    "source_manifest_sha256": "7c3f3ea4f66ecddfe00fcd2c5013e12fc820a58765b5f64a9107ff1532987bb9",
+    "benchmark_day": "2025-01-15"
+  },
+  "sources": [
+    {
+      "month": "2024-12",
+      "bytes": 61524085,
+      "congestion_fee_column_present": false,
+      "source_rows": 3668371,
+      "eligible_rows": 3594727,
+      "quarantine": {
+        "missing_or_negative_total": 70485,
+        "duration_outside_0_to_6_hours": 3125,
+        "pickup_outside_source_month": 34
+      }
+    },
+    {
+      "month": "2025-01",
+      "bytes": 59158238,
+      "congestion_fee_column_present": true,
+      "source_rows": 3475226,
+      "eligible_rows": 3408929,
+      "quarantine": {
+        "duration_outside_0_to_6_hours": 3254,
+        "pickup_outside_source_month": 22,
+        "missing_or_negative_total": 63021
+      }
+    }
+  ],
+  "benchmark": {
+    "rows": 123325,
+    "zones": 232,
+    "flat": {
+      "stored": {
+        "files": 4,
+        "bytes": 112436349
+      },
+      "candidate_files_for_day": {
+        "files": 4,
+        "bytes": 112436349
+      },
+      "local_query_seconds": [
+        0.9954,
+        0.5453,
+        0.6174
+      ],
+      "local_median_seconds": 0.6174
+    },
+    "partitioned": {
+      "stored": {
+        "files": 62,
+        "bytes": 107710243
+      },
+      "candidate_files_for_day": {
+        "files": 1,
+        "bytes": 1851769
+      },
+      "local_query_seconds": [
+        0.4595,
+        0.3121,
+        0.4358
+      ],
+      "local_median_seconds": 0.4358
+    }
+  }
+}

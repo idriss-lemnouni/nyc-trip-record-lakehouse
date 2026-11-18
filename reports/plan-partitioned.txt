@@ -1,0 +1,8 @@
+*(3) Sort [pickup_zone#1355 ASC NULLS FIRST], true, 0
++- Exchange rangepartitioning(pickup_zone#1355 ASC NULLS FIRST, 8), ENSURE_REQUIREMENTS, [plan_id=519]
+   +- *(2) HashAggregate(keys=[pickup_zone#1355], functions=[count(1), sum(total_usd#1358)], output=[pickup_zone#1355, trips#1371L, total_usd#1372])
+      +- Exchange hashpartitioning(pickup_zone#1355, 8), ENSURE_REQUIREMENTS, [plan_id=515]
+         +- *(1) HashAggregate(keys=[pickup_zone#1355], functions=[partial_count(1), partial_sum(total_usd#1358)], output=[pickup_zone#1355, count#1381L, sum#1382, isEmpty#1383])
+            +- *(1) Project [pickup_zone#1355, total_usd#1358]
+               +- *(1) ColumnarToRow
+                  +- FileScan parquet [pickup_zone#1355,total_usd#1358,service_day#1361] Batched: true, DataFilters: [], Format: Parquet, Location: InMemoryFileIndex(1 paths)[file:<snapshot>/facts-by-day], PartitionFilters: [isnotnull(service_day#1361), (service_day#1361 = 2025-01-15)], PushedFilters: [], ReadSchema: struct<pickup_zone:int,total_usd:decimal(13,2)>
